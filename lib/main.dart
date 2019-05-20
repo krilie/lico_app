@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: Splash(
-          str: "images/flower.jpg",
+          str: "images/flower2.jpg",
       ),
     );
   }
