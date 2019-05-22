@@ -40,7 +40,13 @@ class api {
     ProgressCallback onReceiveProgress,
   }) async {
     T t;
-    Response response = await dio.post(path, data: data);
+    Response response = await dio.post(path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress);
     return t.loadJson(json.decode(response.data));
   }
 
@@ -69,7 +75,7 @@ class api {
   }
 
   // logout
-  Future<StdRet> userLogout() async {
+  Future<StdRet> userLogout(String token) async {
     return await Post("/logout");
   }
 }
