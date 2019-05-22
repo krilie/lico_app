@@ -24,12 +24,11 @@ class api {
       receiveTimeout: 3000,
     );
     dio = new Dio(options);
-    dio.interceptors.add(InterceptorsWrapper(
-        onRequest:(RequestOptions options){
 
-    },
-      onResponse: (DioError e){},
-      onError: (DioError e)(),
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (RequestOptions options) {},
+      onError: (DioError e) {},
+      onResponse: (Response e) {},
     ));
   }
 
