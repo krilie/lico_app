@@ -38,6 +38,7 @@ class api {
 
   Future<T> Post<T extends Ret>(
     String path, {
+    bool withToken = true,
     data,
     Map<String, dynamic> queryParameters,
     Options options,
@@ -58,6 +59,7 @@ class api {
 
   Future<T> Get<T extends Ret>(
     String path, {
+    bool withToken = true,
     Map<String, dynamic> queryParameters,
     Options options,
     CancelToken cancelToken,
@@ -77,11 +79,11 @@ class api {
     FormData form = FormData();
     form.add("login_name", userName);
     form.add("password", password);
-    return await Post("/login", data: form);
+    return await Post("/login", data: form, withToken: false);
   }
 
   // logout
   Future<StdRet> userLogout(String token) async {
-    return await Post("/logout");
+    return await Post("/logout", withToken: true);
   }
 }
