@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lico_app/data_storage/kvstorage.dart';
 import 'http_api_model.dart';
 
@@ -39,7 +40,7 @@ class api {
           options.headers[HeaderClientAccToken] = KvStorage.getClientAccToken();
       },
       onError: (DioError e) {
-        print(e.response.data);
+        print(e.message+e.toString()+e.response.toString());
         return dio.resolve(e.response);
       },
       onResponse: (Response e) {},
@@ -101,11 +102,11 @@ class api {
     FormData form = FormData();
     form.add("login_name", userName);
     form.add("password", password);
-    return await _Post("/user/base/login", data: form, withToken: false);
+    return await _Post("/api/user/base/login", data: form, withToken: false);
   }
 
   // logout
   Future<StdRet> userLogout(String token) async {
-    return await _Post("/user/base/logout", withToken: true);
+    return await _Post("/api/user/base/logout", withToken: true);
   }
 }
