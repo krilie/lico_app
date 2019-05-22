@@ -47,7 +47,7 @@ class api {
     dio.interceptors.add(int);
   }
 
-  Future<T> Post<T extends Ret>(
+  Future<T> _Post<T extends Ret>(
     String path, {
     bool withToken = true,
     data,
@@ -72,7 +72,7 @@ class api {
     return t.loadJson(json.decode(response.data));
   }
 
-  Future<T> Get<T extends Ret>(
+  Future<T> _Get<T extends Ret>(
     String path, {
     bool withToken = true,
     Map<String, dynamic> queryParameters,
@@ -98,11 +98,11 @@ class api {
     FormData form = FormData();
     form.add("login_name", userName);
     form.add("password", password);
-    return await Post("/login", data: form, withToken: false);
+    return await _Post("/login", data: form, withToken: false);
   }
 
   // logout
   Future<StdRet> userLogout(String token) async {
-    return await Post("/logout", withToken: true);
+    return await _Post("/logout", withToken: true);
   }
 }
