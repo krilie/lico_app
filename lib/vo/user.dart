@@ -10,5 +10,20 @@ class UserInfo {
   String userNickName;
   String userId;
   String token;
-  UserInfo(this.userName,this.userNickName,this.userId,this.token);
+  List<UserToken> tokens;
+  UserInfo(this.userName,this.userNickName,this.userId,this.token,this.tokens);
+
+  factory UserInfo.fromJson(Map<String,dynamic> json) => _$UserInfoFromJson(json);
+  Map<String,dynamic> toJson()=>_$UserInfoToJson(this);
+
+}
+@JsonSerializable()
+class UserToken{
+  String token;
+  String name;
+  String exp;
+  UserToken(this.token,this.name,this.exp);
+
+  factory UserToken.fromJson(Map<String,dynamic> json) => _$UserTokenFromJson(json);
+  Map<String,dynamic> toJson()=>_$UserTokenToJson(this);
 }
