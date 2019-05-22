@@ -1,24 +1,14 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'http_api.g.dart';
-
-// =================================================================
-@JsonSerializable()
-class UserLoginRet {
-  String token;
-  UserLoginRet(this.token);
-  factory UserLoginRet.fromJson(Map<String,dynamic> json) => _$UserLoginRetFromJson(json);
-  Map<String,dynamic> toJson()=>_$UserLoginRetToJson(this);
-}
+import 'http_api_model.dart';
 
 class api {
   // 工厂模式
-  factory api() =>_getInstance();
+  factory api() => _getInstance();
+
   static api get instance => _getInstance();
   static api _instance = new api._internal();
+
   static api _getInstance() {
     return _instance;
   }
@@ -26,6 +16,7 @@ class api {
   // or new Dio with a BaseOptions instance.
   BaseOptions options;
   Dio dio;
+
   api._internal() {
     options = new BaseOptions(
       baseUrl: "https://api.ligo.ml",
@@ -34,14 +25,51 @@ class api {
     );
     dio = new Dio(options);
   }
-  void setErrorInterceptor(Interceptor int){
+
+  void setErrorInterceptor(Interceptor int) {
     dio.interceptors.add(int);
   }
-  // login
-  Future<UserLoginRet> userLogin(String userName,String password) async {
-      Response response = await dio.post("/login",data: {"login_name":userName,"password":password});
-      return UserLoginRet.fromJson(json.decode(response.data));
+
+  Future<T> Post<T extends Ret>(
+    String path, {
+    data,
+    Map<String, dynamic> queryParameters,
+    Options options,
+    CancelToken cancelToken,
+    ProgressCallback onSendProgress,
+    ProgressCallback onReceiveProgress,
+  }) async {
+    T t;
+    Response response = await dio.post(path, data: data);
+    return t.loadJson(json.decode(response.data));
   }
 
+  Future<T> Get<T extends Ret>(
+    String path, {
+    Map<String, dynamic> queryParameters,
+    Options options,
+    CancelToken cancelToken,
+    ProgressCallback onReceiveProgress,
+  }) async {
+    T t;
+    Response response = await dio.get(path,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress);
+    return t.loadJson(json.decode(response.data));
+  }
 
+// login
+  Future<UserLoginRet> userLogin(String userName, String password) async {
+    FormData form = FormData();
+    form.add("login_name", userName);
+    form.add("password", password);
+    return await Post("/login", data: form);
+  }
+
+  // logout
+  Future<StdRet> userLogout() async {
+    return await Post("/logout");
+  }
 }
