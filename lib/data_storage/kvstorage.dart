@@ -9,12 +9,12 @@ class KvStorage {
     prefs.setString("user_id", userId);
     prefs.setString("user_token", token);
   }
-  static Future<String> getUserNickName(String v) async{
+  static Future<String> getUserNickName() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("user_nick_name");
   }
 
-  static Future<String> getClientAccToken(String v) async{
+  static Future<String> getClientAccToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("client_acc_token");
   }
@@ -24,11 +24,11 @@ class KvStorage {
     prefs.setString("client_acc_token", v);
   }
 
-  static Future<String> getUserToken(String v) async{
+  static Future<String> getUserToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("user_token");
   }
-  static Future<String> getUserId(String v) async{
+  static Future<String> getUserId() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("user_id");
   }

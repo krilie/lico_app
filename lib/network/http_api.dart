@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:lico_app/data_storage/kvstorage.dart';
 import 'http_api_model.dart';
+
+var HeaderClientAccToken = "ClientAccToken"; // for header client access token
+var HeaderAuthorization = "Authorization"; //for authorization
 
 class api {
   // 工厂模式
@@ -26,7 +30,14 @@ class api {
     dio = new Dio(options);
 
     dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options) {},
+      onRequest: (RequestOptions options) {
+        if (options.headers == null)
+          options.headers = {
+            HeaderClientAccToken: KvStorage.getClientAccToken()
+          };
+        else
+          options.headers[HeaderClientAccToken] = KvStorage.getClientAccToken();
+      },
       onError: (DioError e) {},
       onResponse: (Response e) {},
     ));
@@ -47,6 +58,10 @@ class api {
     ProgressCallback onReceiveProgress,
   }) async {
     T t;
+    if (options == null) options = new Options();
+    if (options.headers == null) options.headers = Map<String, dynamic>();
+    if (withToken)
+      options.headers[HeaderAuthorization] = KvStorage.getUserToken();
     Response response = await dio.post(path,
         data: data,
         queryParameters: queryParameters,
@@ -66,6 +81,10 @@ class api {
     ProgressCallback onReceiveProgress,
   }) async {
     T t;
+    if (options == null) options = new Options();
+    if (options.headers == null) options.headers = Map<String, dynamic>();
+    if (withToken)
+      options.headers[HeaderAuthorization] = KvStorage.getUserToken();
     Response response = await dio.get(path,
         queryParameters: queryParameters,
         options: options,
