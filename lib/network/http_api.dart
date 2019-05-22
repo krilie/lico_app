@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -36,13 +38,9 @@ class api {
     dio.interceptors.add(int);
   }
   // login
-  Future<UserLoginRet> Userlogin(String userName,String password) async {
-    try {
-      Response response = await dio.post("/login",data: {"":""});
-      print(response);
-    } catch (e) {
-      print(e);
-    }
+  Future<UserLoginRet> userLogin(String userName,String password) async {
+      Response response = await dio.post("/login",data: {"login_name":userName,"password":password});
+      return UserLoginRet.fromJson(json.decode(response.data));
   }
 
 
