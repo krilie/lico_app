@@ -40,7 +40,10 @@ class api {
           options.headers[HeaderClientAccToken] = KvStorage.getClientAccToken();
       },
       onError: (DioError e) {
-        print(e.message+e.toString()+e.response.toString());
+        if(e.response.statusCode == 500){
+          var msg = StdRet.fromJson(e.response.data);
+          debugPrint(msg.code+msg.message);
+        }
         return dio.resolve(e.response);
       },
       onResponse: (Response e) {},
