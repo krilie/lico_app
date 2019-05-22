@@ -44,7 +44,7 @@ class api {
           var msg = StdRet.fromJson(e.response.data);
           debugPrint(msg.code+msg.message);
         }
-        return dio.resolve(e.response);
+        return e;
       },
       onResponse: (Response e) {},
     ));
@@ -69,14 +69,17 @@ class api {
     if (options.headers == null) options.headers = Map<String, dynamic>();
     if (withToken)
       options.headers[HeaderAuthorization] = KvStorage.getUserToken();
-    Response response = await dio.post(path,
+    dio.post(path,
         data: data,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress);
-    return t.loadJson(json.decode(response.data));
+        onReceiveProgress: onReceiveProgress).then((o){
+      return t.loadJson(o.data);
+    }).catchError((o){
+      debugPrint(o);
+    });
   }
 
   Future<T> _Get<T extends Ret>(
@@ -92,12 +95,15 @@ class api {
     if (options.headers == null) options.headers = Map<String, dynamic>();
     if (withToken)
       options.headers[HeaderAuthorization] = KvStorage.getUserToken();
-    Response response = await dio.get(path,
+    dio.get(path,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,
-        onReceiveProgress: onReceiveProgress);
-    return t.loadJson(json.decode(response.data));
+        onReceiveProgress: onReceiveProgress).then((o){
+      return t.loadJson(o.data);
+    }).catchError((o){
+      debugPrint(o);
+    });
   }
 
 // login
