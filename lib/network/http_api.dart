@@ -38,7 +38,10 @@ class api {
         else
           options.headers[HeaderClientAccToken] = KvStorage.getClientAccToken();
       },
-      onError: (DioError e) {},
+      onError: (DioError e) {
+        print(e.response.data);
+        return dio.resolve(e.response);
+      },
       onResponse: (Response e) {},
     ));
   }
@@ -98,11 +101,11 @@ class api {
     FormData form = FormData();
     form.add("login_name", userName);
     form.add("password", password);
-    return await _Post("/login", data: form, withToken: false);
+    return await _Post("/user/base/login", data: form, withToken: false);
   }
 
   // logout
   Future<StdRet> userLogout(String token) async {
-    return await _Post("/logout", withToken: true);
+    return await _Post("/user/base/logout", withToken: true);
   }
 }

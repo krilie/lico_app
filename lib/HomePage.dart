@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:core';
+import 'package:lico_app/network/http_api.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -12,7 +13,12 @@ class HomePage extends StatelessWidget {
       ),
       body: ConstrainedBox(
         child: RaisedButton(
-          onPressed: (){},
+          onPressed: () {
+            var token = api.instance.userLogin("aa", "bb");
+            token.then((o){
+              print(o);
+            });
+          },
           child: Text("ok"),
         ),
         constraints: new BoxConstraints.expand(),
