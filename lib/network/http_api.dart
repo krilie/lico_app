@@ -31,6 +31,9 @@ class api {
       receiveTimeout: 3000,
     );
     dio = new Dio(options);
+
+
+
   }
 
   void setErrorInterceptor(Interceptor int) {
