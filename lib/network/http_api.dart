@@ -21,6 +21,7 @@ class api {
   // or new Dio with a BaseOptions instance.
   BaseOptions options;
   Dio dio;
+  InterceptorErrorCallback errorCallback;
 
   api._internal() {
     options = new BaseOptions(
@@ -30,24 +31,6 @@ class api {
     );
     dio = new Dio(options);
 
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options) {
-        if (options.headers == null)
-          options.headers = {
-            HeaderClientAccToken: "123",
-          };
-        else
-          options.headers[HeaderClientAccToken] = "234";
-      },
-      onError: (DioError e) {
-        if(e.response.statusCode == 500){
-          var msg = StdRet.fromJson(e.response.data);
-          debugPrint(e.response.statusCode.toString()+msg.code+msg.message);
-        }
-        return e.response;
-      },
-      onResponse: (Response e) {},
-    ));
   }
 
   void setErrorInterceptor(Interceptor int) {
