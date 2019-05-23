@@ -32,8 +32,23 @@ class api {
     );
     dio = new Dio(options);
 
-
-
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (RequestOptions options) {
+        if (options.headers == null)
+          options.headers = {
+            HeaderClientAccToken: "56"
+          };
+        else
+          options.headers[HeaderClientAccToken] = "89";
+      },
+      onError: (DioError e) {
+        var msg = StdRet.fromJson(e.response.data);
+        debugPrint(msg.code + msg.message);
+        showToast("${msg.code} :${msg.message}");
+        return e;
+      },
+      onResponse: (Response e) {},
+    ));
   }
 
   void setErrorInterceptor(Interceptor int) {
@@ -53,18 +68,19 @@ class api {
     T t;
     if (options == null) options = new Options();
     if (options.headers == null) options.headers = Map<String, dynamic>();
-    if (withToken)
-      options.headers[HeaderAuthorization] = "234";
-    dio.post(path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress).then((o){
+    if (withToken) options.headers[HeaderAuthorization] = "234";
+    dio
+        .post(path,
+            data: data,
+            queryParameters: queryParameters,
+            options: options,
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress)
+        .then((o) {
       return t.loadJson(o.data);
-    }).catchError((o){
-       // 什么也不做
+    }).catchError((o) {
+      // 什么也不做
     });
   }
 
@@ -79,15 +95,16 @@ class api {
     T t;
     if (options == null) options = new Options();
     if (options.headers == null) options.headers = Map<String, dynamic>();
-    if (withToken)
-      options.headers[HeaderAuthorization] = "456";
-    dio.get(path,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-        onReceiveProgress: onReceiveProgress).then((o){
+    if (withToken) options.headers[HeaderAuthorization] = "456";
+    dio
+        .get(path,
+            queryParameters: queryParameters,
+            options: options,
+            cancelToken: cancelToken,
+            onReceiveProgress: onReceiveProgress)
+        .then((o) {
       return t.loadJson(o.data);
-    }).catchError((o){
+    }).catchError((o) {
       // 什么也不做
     });
   }
@@ -104,5 +121,4 @@ class api {
   Future<StdRet> userLogout(String token) async {
     return await _Post("/api/user/logout", withToken: true);
   }
-
 }
