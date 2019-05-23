@@ -34,17 +34,17 @@ class api {
       onRequest: (RequestOptions options) {
         if (options.headers == null)
           options.headers = {
-            HeaderClientAccToken: KvStorage.getClientAccToken()
+            HeaderClientAccToken: "123",
           };
         else
-          options.headers[HeaderClientAccToken] = KvStorage.getClientAccToken();
+          options.headers[HeaderClientAccToken] = "234";
       },
       onError: (DioError e) {
         if(e.response.statusCode == 500){
           var msg = StdRet.fromJson(e.response.data);
-          debugPrint(msg.code+msg.message);
+          debugPrint(e.response.statusCode.toString()+msg.code+msg.message);
         }
-        return e;
+        return e.response;
       },
       onResponse: (Response e) {},
     ));
@@ -68,7 +68,7 @@ class api {
     if (options == null) options = new Options();
     if (options.headers == null) options.headers = Map<String, dynamic>();
     if (withToken)
-      options.headers[HeaderAuthorization] = KvStorage.getUserToken();
+      options.headers[HeaderAuthorization] = "234";
     dio.post(path,
         data: data,
         queryParameters: queryParameters,
@@ -94,7 +94,7 @@ class api {
     if (options == null) options = new Options();
     if (options.headers == null) options.headers = Map<String, dynamic>();
     if (withToken)
-      options.headers[HeaderAuthorization] = KvStorage.getUserToken();
+      options.headers[HeaderAuthorization] = "456";
     dio.get(path,
         queryParameters: queryParameters,
         options: options,
@@ -111,11 +111,14 @@ class api {
     FormData form = FormData();
     form.add("login_name", userName);
     form.add("password", password);
-    return await _Post("/api/user/base/login", data: form, withToken: false);
+    return await _Post("/api/user/login", data: form, withToken: false);
   }
 
   // logout
   Future<StdRet> userLogout(String token) async {
-    return await _Post("/api/user/base/logout", withToken: true);
+    return await _Post("/api/user/logout", withToken: true);
   }
+
+
+
 }

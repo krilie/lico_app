@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
           onPressed: () {
             var token = api.instance.userLogin("aa", "bb");
             token.then((o){
-              print(o);
+              debugPrint(o.toString());
             });
           },
           child: Text("ok"),
