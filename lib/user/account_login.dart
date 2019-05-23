@@ -1,7 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:lico_app/data_storage/kvstorage.dart';
+import 'package:lico_app/network/http_api.dart';
+import 'package:lico_app/network/http_api_model.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:lico_app/HomePage.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -57,32 +62,20 @@ class _LoginScreenState extends State<_LoginScreen> {
       showToast("密码不能为空");
     } else {
       showLoadingDialog();
-      Dio dio = new Dio();
-      dio.options.baseUrl = ServerUrl.base;
-      FormData formData = new FormData.from({
-        "mobile": phoneController.text,
-        "pwd": passController.text,
-      });
+      // 检查登录状态
+
       try {
-        Response response = await dio.post(ServerUrl.token, data: formData);
-        print(response.data.toString());
-        if (response.data["status"] == 0) {
-          String token = response.data["data"]["token"];
-          print(token);
-          if (token != null && token.trim() != "") {
-            SharedPreferences sp = await SharedPreferences.getInstance();
-            sp.setString("token", token);
-            Navigator.of(context).pushReplacementNamed('/main');
-          } else {
-            showToast("登录失败)");
-          }
-        } else {
-          showToast("账号或密码错误");
-        }
+        UserLoginRet ret = await api.instance
+            .userLogin(phoneController.text, passController.text);
+        KvStorage.setUserInfo(null, null, ret.token);
+        //跳转主页 且销毁当前页面
+        Navigator.of(context).pushAndRemoveUntil(
+            new MaterialPageRoute(builder: (context) => new HomePage()),
+            (Route<dynamic> rout) => false);
       } catch (e) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx and is also not 304.
-        showToast("网络连接错误");
+//        showToast("网络连接错误");
       } finally {
         hideLoadingDialog();
       }
@@ -107,8 +100,8 @@ class _LoginScreenState extends State<_LoginScreen> {
           new ConstrainedBox(
             constraints: BoxConstraints.expand(),
             child: new Image.asset(
-              "assets/images/login_bg.png",
-              fit: BoxFit.fill,
+              "images/flower2.jpg",
+              fit: BoxFit.fitWidth,
             ),
           ),
           new Padding(
@@ -117,24 +110,12 @@ class _LoginScreenState extends State<_LoginScreen> {
             child: SingleChildScrollView(
                 child: new Column(
               children: <Widget>[
-                // 顶部logo
-                new Center(
-                  child: new Image.asset("assets/images/login_logo.png"),
-                ),
-                // 欢迎文字
-                new Padding(
-                  padding: new EdgeInsets.fromLTRB(0.0, 26.0, 0.0, 0.0),
-                  child: new Center(
-                    child: new Image.asset("assets/images/login_welcome.png"),
-                  ),
-                ),
                 // 输入框卡片
                 new Padding(
                   padding: new EdgeInsets.fromLTRB(0.0, 28.0, 0.0, 0.0),
                   child: new Stack(
                     alignment: const Alignment(0.0, -1.0),
                     children: <Widget>[
-                      new Image.asset("assets/images/login_rect.png"),
                       new Padding(
                         padding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
                         child: new Column(

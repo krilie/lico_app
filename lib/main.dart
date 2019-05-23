@@ -10,7 +10,7 @@ import 'HomePage.dart';
 void main() {
   // See https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-  runApp(OKToast(child: MyApp()));
+  runApp(OKToast(child: MyApp(),position: ToastPosition.bottom));
 }
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lico_app/HomePage.dart';
+import 'package:lico_app/user/account_login.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class _SplashPage extends State<SplashPage> {
       if (!isStartHomePage) {
         //跳转主页 且销毁当前页面
         Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => new HomePage()),
+            new MaterialPageRoute(builder: (context) => new LoginScreen()),
             (Route<dynamic> rout) => false);
         isStartHomePage = true;
       }
