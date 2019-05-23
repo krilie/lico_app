@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
         title: new Text('应用'),
       ),
       body: ConstrainedBox(
-        child: RaisedButton(
+        child: FlatButton(
           onPressed: () {
             var token = api.instance.userLogin("aa", "bb");
             token.then((o){

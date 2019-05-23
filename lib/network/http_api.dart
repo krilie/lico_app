@@ -78,7 +78,7 @@ class api {
         onReceiveProgress: onReceiveProgress).then((o){
       return t.loadJson(o.data);
     }).catchError((o){
-      debugPrint(o);
+       // 什么也不做
     });
   }
 
@@ -102,7 +102,7 @@ class api {
         onReceiveProgress: onReceiveProgress).then((o){
       return t.loadJson(o.data);
     }).catchError((o){
-      debugPrint(o);
+      // 什么也不做
     });
   }
 
@@ -118,7 +118,5 @@ class api {
   Future<StdRet> userLogout(String token) async {
     return await _Post("/api/user/logout", withToken: true);
   }
-
-
 
 }
