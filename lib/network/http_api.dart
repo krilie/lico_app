@@ -26,7 +26,7 @@ class api {
 
   api._internal() {
     options = new BaseOptions(
-      baseUrl: "https://api.ligo.ml",
+      baseUrl: "https://ligo.ml:83",
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
