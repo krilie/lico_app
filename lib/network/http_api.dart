@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lico_app/data_storage/kvstorage.dart';
+import 'package:oktoast/oktoast.dart';
 import 'http_api_model.dart';
 
 var HeaderClientAccToken = "ClientAccToken"; // for header client access token
@@ -30,7 +31,6 @@ class api {
       receiveTimeout: 3000,
     );
     dio = new Dio(options);
-
   }
 
   void setErrorInterceptor(Interceptor int) {

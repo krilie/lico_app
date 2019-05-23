@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:lico_app/network/http_api.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'network/http_api_model.dart';
 
@@ -32,25 +33,5 @@ class _HomePage extends State<HomePage> {
   }
 
   @override
-  void initState() {
-    api.instance.dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options) {
-        if (options.headers == null)
-          options.headers = {
-            HeaderClientAccToken: "123",
-          };
-        else
-          options.headers[HeaderClientAccToken] = "234";
-      },
-      onError: (DioError e) {
-        var msg = StdRet.fromJson(e.response.data);
-        final snackBar = new SnackBar(
-            content: new Text(
-                e.response.statusCode.toString() + msg.code + msg.message));
-        Scaffold.of(context).showSnackBar(snackBar);
-        return e.response;
-      },
-      onResponse: (Response e) {},
-    ));
-  }
+  void initState() {}
 }
