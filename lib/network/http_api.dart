@@ -45,7 +45,7 @@ class api {
       onError: (DioError e) {
         var msg = StdRet.fromJson(e.response.data);
         debugPrint(msg.code + msg.message);
-        showToast("${msg.code} :${msg.message}");
+        showToast("${msg.code} :${msg.message}",duration: Duration(seconds: 7));
         return e;
       },
       onResponse: (Response e) {},
@@ -120,7 +120,7 @@ class api {
   }
   // register
   // login
-  Future<UserRegisterRet> userRegister(String userName, String password) async {
+  Future<StdRet> userRegister(String userName, String password) async {
     return await _Post("/api/user/register", data: {"login_name":userName,"password":password}, withToken: false,options: Options(contentType: ContentType.parse("application/x-www-form-urlencoded")));
   }
 
