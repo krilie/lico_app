@@ -22,7 +22,7 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
               height: 60,
               child: Column(
                 children: <Widget>[
-                  Text("ok"),
+                  TextField(),
                   Text("ok2"),
                 ],
               )),

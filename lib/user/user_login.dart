@@ -106,19 +106,19 @@ class _LoginScreenState extends State<_LoginScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(38.0, 60.0, 38.0, 0.0),
+            padding: EdgeInsets.fromLTRB(0.0, 0.0,0.0, 0.0),
             // 滚动布局，输入法键盘打开时输入框可以上移
             child: SingleChildScrollView(
                 child: Column(
               children: <Widget>[
                 // 输入框卡片
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 28.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                   child: Stack(
                     alignment: Alignment(0.0, -1.0),
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                         child: Column(
                           children: <Widget>[
                             TextField(
