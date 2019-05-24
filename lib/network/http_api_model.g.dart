@@ -19,3 +19,10 @@ UserLoginRet _$UserLoginRetFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UserLoginRetToJson(UserLoginRet instance) =>
     <String, dynamic>{'token': instance.token};
+
+UserRegisterRet _$UserRegisterRetFromJson(Map<String, dynamic> json) {
+  return UserRegisterRet(json['token'] as String);
+}
+
+Map<String, dynamic> _$UserRegisterRetToJson(UserRegisterRet instance) =>
+    <String, dynamic>{'token': instance.token};

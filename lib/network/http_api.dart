@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lico_app/data_storage/kvstorage.dart';
@@ -36,10 +37,10 @@ class api {
       onRequest: (RequestOptions options) {
         if (options.headers == null)
           options.headers = {
-            HeaderClientAccToken: "56"
+            HeaderClientAccToken: "1234"
           };
         else
-          options.headers[HeaderClientAccToken] = "89";
+          options.headers[HeaderClientAccToken] = "1234";
       },
       onError: (DioError e) {
         var msg = StdRet.fromJson(e.response.data);
@@ -109,16 +110,18 @@ class api {
     });
   }
 
-// login
+  // login
   Future<UserLoginRet> userLogin(String userName, String password) async {
-    FormData form = FormData();
-    form.add("login_name", userName);
-    form.add("password", password);
-    return await _Post("/api/user/login", data: form, withToken: false);
+    return await _Post("/api/user/login", data: {"login_name":userName,"password":password}, withToken: false,options: Options(contentType: ContentType.parse("application/x-www-form-urlencoded")));
   }
-
   // logout
   Future<StdRet> userLogout(String token) async {
     return await _Post("/api/user/logout", withToken: true);
   }
+  // register
+  // login
+  Future<UserRegisterRet> userRegister(String userName, String password) async {
+    return await _Post("/api/user/register", data: {"login_name":userName,"password":password}, withToken: false,options: Options(contentType: ContentType.parse("application/x-www-form-urlencoded")));
+  }
+
 }

@@ -42,3 +42,20 @@ class UserLoginRet implements Ret {
     return UserLoginRet.fromJson(json);
   }
 }
+// =====================================================================
+@JsonSerializable()
+class UserRegisterRet implements Ret {
+  String token;
+
+  UserRegisterRet(this.token);
+
+  factory UserRegisterRet.fromJson(Map<String, dynamic> json) =>
+      _$UserRegisterRetFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserRegisterRetToJson(this);
+
+  @override
+  UserRegisterRet loadJson(Map<String, dynamic> json) {
+    return UserRegisterRet.fromJson(json);
+  }
+}
