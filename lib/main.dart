@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
           //配置路径
           '/HomePage': (BuildContext context) => HomePage(),
         },
+        debugShowMaterialGrid: false,
+        showPerformanceOverlay: false,
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
