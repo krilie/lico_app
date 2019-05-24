@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lico_app/data_storage/kvstorage.dart';
 import 'package:lico_app/network/http_api.dart';
 import 'package:lico_app/network/http_api_model.dart';
+import 'package:lico_app/user/user_register.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -196,7 +197,31 @@ class _LoginScreenState extends State<_LoginScreen> {
                       )),
                     ],
                   ),
-                )
+                ),
+
+                new Padding(
+                  padding: new EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+                  child: Row(
+                    children: <Widget>[
+                      new Expanded(
+                          child: new RaisedButton(
+                        onPressed: () {
+                          // 调到注册界面
+                          Navigator.of(context)
+                              .push(new MaterialPageRoute(builder: (context) {
+                            return UserRegisterScreen();
+                          }));
+                        },
+                        color: new Color(0xffFE9A18),
+                        child: new Text(
+                          "注册",
+                          style: new TextStyle(
+                              color: Colors.white, fontSize: 16.0),
+                        ),
+                      )),
+                    ],
+                  ),
+                ),
               ],
             )),
           ),

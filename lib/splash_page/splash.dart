@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lico_app/HomePage.dart';
-import 'package:lico_app/user/account_login.dart';
+import 'package:lico_app/user/user_login.dart';
 
 class SplashPage extends StatefulWidget {
   SplashPage({Key key}) : super(key: key);
