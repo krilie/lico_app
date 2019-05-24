@@ -29,7 +29,7 @@ class _SplashPage extends State<SplashPage> {
   void initState() {
     super.initState();
     //设置倒计时三秒后执行跳转方法
-    var duration = new Duration(seconds: 3);
+    var duration = new Duration(seconds: 1);
     new Future.delayed(duration, () {
       //如果页面还未跳转过则跳转页面
       if (!isStartHomePage) {

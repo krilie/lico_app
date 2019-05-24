@@ -14,14 +14,14 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: '登录',
-      home: new _LoginScreen(),
+      home: _LoginScreen(),
     );
   }
 }
 
 class _LoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => new _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<_LoginScreen> {
@@ -40,11 +40,11 @@ class _LoginScreenState extends State<_LoginScreen> {
   // 显示加载进度条
   showLoadingDialog() {
     setState(() {
-      loadingDialog = new Container(
+      loadingDialog = Container(
           constraints: BoxConstraints.expand(),
           color: Color(0x80000000),
-          child: new Center(
-            child: new CircularProgressIndicator(),
+          child: Center(
+            child: CircularProgressIndicator(),
           ));
     });
   }
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<_LoginScreen> {
   // 隐藏加载进度条
   hideLoadingDialog() {
     setState(() {
-      loadingDialog = new Container();
+      loadingDialog = Container();
     });
   }
 
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<_LoginScreen> {
         KvStorage.setUserInfo(null, null, ret.token);
         //跳转主页 且销毁当前页面
         Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => new HomePage()),
+            MaterialPageRoute(builder: (context) => new HomePage()),
             (Route<dynamic> rout) => false);
       } catch (e) {
         // The request was made and the server responded with a status code
@@ -94,34 +94,34 @@ class _LoginScreenState extends State<_LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: new Stack(
-        alignment: const Alignment(0.0, -1.0),
+      body: Stack(
+        alignment: Alignment(0.0, -1.0),
         children: [
           // 背景图
-          new ConstrainedBox(
+          ConstrainedBox(
             constraints: BoxConstraints.expand(),
             child: new Image.asset(
               "images/flower2.jpg",
               fit: BoxFit.fitWidth,
             ),
           ),
-          new Padding(
-            padding: new EdgeInsets.fromLTRB(38.0, 60.0, 38.0, 0.0),
+          Padding(
+            padding: EdgeInsets.fromLTRB(38.0, 60.0, 38.0, 0.0),
             // 滚动布局，输入法键盘打开时输入框可以上移
             child: SingleChildScrollView(
-                child: new Column(
+                child: Column(
               children: <Widget>[
                 // 输入框卡片
-                new Padding(
-                  padding: new EdgeInsets.fromLTRB(0.0, 28.0, 0.0, 0.0),
-                  child: new Stack(
-                    alignment: const Alignment(0.0, -1.0),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 28.0, 0.0, 0.0),
+                  child: Stack(
+                    alignment: Alignment(0.0, -1.0),
                     children: <Widget>[
-                      new Padding(
-                        padding: new EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
-                        child: new Column(
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+                        child: Column(
                           children: <Widget>[
-                            new TextField(
+                            TextField(
                               // 控制器用于获取输入的内容
                               controller: phoneController,
                               // 键盘格式
@@ -148,10 +148,10 @@ class _LoginScreenState extends State<_LoginScreen> {
                                       new TextStyle(color: Colors.white54)),
                               autofocus: false, // 是否自动获取焦点
                             ),
-                            new Divider(
+                            Divider(
                               color: Colors.white,
                             ),
-                            new TextField(
+                            TextField(
                               controller: passController,
                               keyboardType: TextInputType.text,
                               cursorColor: Colors.white,
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<_LoginScreen> {
                                       new TextStyle(color: Colors.white54)),
                               autofocus: false,
                             ),
-                            new Divider(
+                            Divider(
                               color: Colors.white,
                             ),
                           ],
@@ -179,46 +179,34 @@ class _LoginScreenState extends State<_LoginScreen> {
                     ],
                   ),
                 ), // 登录按钮
-                new Padding(
-                  padding: new EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
-                  child: Row(
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Column(
                     children: <Widget>[
-                      new Expanded(
-                          child: new RaisedButton(
+                      RaisedButton(
                         onPressed: () {
                           login();
                         },
-                        color: new Color(0xffFE9A18),
-                        child: new Text(
+                        color: Color(0xffFE9A18),
+                        child: Text(
                           "登录",
-                          style: new TextStyle(
-                              color: Colors.white, fontSize: 16.0),
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
-                      )),
-                    ],
-                  ),
-                ),
-
-                new Padding(
-                  padding: new EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
-                  child: Row(
-                    children: <Widget>[
-                      new Expanded(
-                          child: new RaisedButton(
+                      ),
+                      RaisedButton(
                         onPressed: () {
                           // 调到注册界面
                           Navigator.of(context)
-                              .push(new MaterialPageRoute(builder: (context) {
+                              .push(MaterialPageRoute(builder: (context) {
                             return UserRegisterScreen();
                           }));
                         },
-                        color: new Color(0xffFE9A18),
-                        child: new Text(
+                        color: Color(0xffFE9A18),
+                        child: Text(
                           "注册",
-                          style: new TextStyle(
-                              color: Colors.white, fontSize: 16.0),
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
-                      )),
+                      ),
                     ],
                   ),
                 ),
