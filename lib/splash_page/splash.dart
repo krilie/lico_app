@@ -35,7 +35,7 @@ class _SplashPage extends State<SplashPage> {
       if (!isStartHomePage) {
         //跳转主页 且销毁当前页面
         Navigator.of(context).pushAndRemoveUntil(
-            new MaterialPageRoute(builder: (context) => new LoginScreen()),
+            new MaterialPageRoute(builder: (context) => new UserLoginScreen()),
             (Route<dynamic> rout) => false);
         isStartHomePage = true;
       }
