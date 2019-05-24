@@ -25,16 +25,9 @@ class _LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<_LoginScreen> {
-  //手机号的控制器
   TextEditingController phoneController = TextEditingController();
-
-  //密码的控制器
   TextEditingController passController = TextEditingController();
-
-  // 光标跳转的输入框对象
   FocusNode secondTextFieldNode = FocusNode();
-
-  // 加载进度条
   Container loadingDialog;
 
   // 显示加载进度条
@@ -64,7 +57,6 @@ class _LoginScreenState extends State<_LoginScreen> {
     } else {
       showLoadingDialog();
       // 检查登录状态
-
       try {
         UserLoginRet ret = await api.instance
             .userLogin(phoneController.text, passController.text);
@@ -74,14 +66,9 @@ class _LoginScreenState extends State<_LoginScreen> {
             MaterialPageRoute(builder: (context) => new HomePage()),
             (Route<dynamic> rout) => false);
       } catch (e) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx and is also not 304.
-//        showToast("网络连接错误");
       } finally {
         hideLoadingDialog();
       }
-//      phoneController.clear();
-//      passController.clear();
     }
   }
 
@@ -117,9 +104,7 @@ class _LoginScreenState extends State<_LoginScreen> {
                   child: Stack(
                     alignment: Alignment(0.0, -1.0),
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                        child: Column(
+                         Column(
                           children: <Widget>[
                             TextField(
                               // 控制器用于获取输入的内容
@@ -175,7 +160,6 @@ class _LoginScreenState extends State<_LoginScreen> {
                             ),
                           ],
                         ),
-                      )
                     ],
                   ),
                 ), // 登录按钮
