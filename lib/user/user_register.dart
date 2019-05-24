@@ -17,9 +17,15 @@ class _UserRegisterScreen extends State<UserRegisterScreen> {
       body: Padding(
         padding: EdgeInsets.all(8.0),
         child: Center(
-          widthFactor: 180,
-          heightFactor: 80,
-          child: Text("center"),
+          child: Container(
+              width: 160,
+              height: 60,
+              child: Column(
+                children: <Widget>[
+                  Text("ok"),
+                  Text("ok2"),
+                ],
+              )),
         ),
       ),
     );
