@@ -17,37 +17,37 @@ class KvStorage implements kvStorager {
   @override
   void setUserInfo(String nickName,userId,token) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("user_nick_name", nickName);
-    prefs.setString("user_id", userId);
-    prefs.setString("user_token", token);
+    prefs.setString(Keys.userNickName, nickName);
+    prefs.setString(Keys.userId, userId);
+    prefs.setString(Keys.userToken, token);
   }
   @override
   Future<String> getUserNickName() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("user_nick_name");
+    return prefs.getString(Keys.userNickName);
   }
 
   @override
   Future<String> getClientAccToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("client_acc_token");
+    return prefs.getString(Keys.clientAccToken);
   }
 
   @override
   void setClientAccToken(String v) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("client_acc_token", v);
+    prefs.setString(Keys.clientAccToken, v);
   }
 
   @override
   Future<String> getUserToken() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("user_token");
+    return prefs.getString(Keys.userToken);
   }
   @override
   Future<String> getUserId() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString("user_id");
+    return prefs.getString(Keys.userId);
   }
 
   @override
@@ -56,6 +56,17 @@ class KvStorage implements kvStorager {
 //      onValue.commit();
     });
 
+  }
+
+  @override
+  Future<String> getHostPort() {
+    // TODO: implement getHostPort
+    return null;
+  }
+
+  @override
+  void setHostPort(String hostPort) {
+    // TODO: implement setHostPort
   }
 
 }

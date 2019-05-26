@@ -79,4 +79,15 @@ class kvSqliteHelper implements kvStorager {
   void close() {
     if (_database != null) _database.close();
   }
+
+  @override
+  Future<String> getHostPort() {
+    // TODO: implement getHostPort
+    return null;
+  }
+
+  @override
+  void setHostPort(String hostPort) {
+    // TODO: implement setHostPort
+  }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lico_app/data_storage/kvstorage.dart';
+import 'package:lico_app/data_storage/kvstorager.dart';
 import 'package:oktoast/oktoast.dart';
 import 'http_api_model.dart';
 
@@ -26,8 +26,10 @@ class api {
   InterceptorErrorCallback errorCallback;
 
   api._internal() {
+    var hostport="https://ligo.ml:83";
+    kvstorage.getHostPort().then((o){hostport = o;});
     options = new BaseOptions(
-      baseUrl: "https://ligo.ml:83",
+      baseUrl: hostport,
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
@@ -37,10 +39,10 @@ class api {
       onRequest: (RequestOptions options) {
         if (options.headers == null)
           options.headers = {
-            HeaderClientAccToken: "1234"
+            HeaderClientAccToken: kvstorage.getClientAccToken()
           };
         else
-          options.headers[HeaderClientAccToken] = "1234";
+          options.headers[HeaderClientAccToken] = kvstorage.getClientAccToken();
       },
       onError: (DioError e) {
         var msg = StdRet.fromJson(e.response.data);
@@ -69,7 +71,7 @@ class api {
     T t;
     if (options == null) options = new Options();
     if (options.headers == null) options.headers = Map<String, dynamic>();
-    if (withToken) options.headers[HeaderAuthorization] = "234";
+    if (withToken) options.headers[HeaderAuthorization] = await kvstorage.getUserToken();
     dio
         .post(path,
             data: data,
@@ -96,7 +98,7 @@ class api {
     T t;
     if (options == null) options = new Options();
     if (options.headers == null) options.headers = Map<String, dynamic>();
-    if (withToken) options.headers[HeaderAuthorization] = "456";
+    if (withToken) options.headers[HeaderAuthorization] = await kvstorage.getUserToken();
     dio
         .get(path,
             queryParameters: queryParameters,
