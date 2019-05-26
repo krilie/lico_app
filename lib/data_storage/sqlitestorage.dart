@@ -2,7 +2,7 @@ import 'package:lico_app/data_storage/kvstorager.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class kvSqliteHelper implements kvstorager{
+class kvSqliteHelper implements kvstorager {
   // 工厂模式
   factory kvSqliteHelper() => _getInstance();
 
@@ -29,13 +29,13 @@ class kvSqliteHelper implements kvstorager{
       return path;
     });
   }
+
   _create() {
     // open the database
     openDatabase(kvSqlitePath(), version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
-      await db.execute(
-          'CREATE TABLE kv(key TEXT PRIMARY KEY, value TEXT)');
+      await db.execute('CREATE TABLE kv(key TEXT PRIMARY KEY, value TEXT)');
     }).then((db) {
       _database = db;
     });
@@ -77,8 +77,6 @@ class kvSqliteHelper implements kvstorager{
 
   @override
   void close() {
-    if(_database !=null)
-      _database.close();
+    if (_database != null) _database.close();
   }
-
 }
