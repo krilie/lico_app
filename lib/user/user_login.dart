@@ -34,9 +34,7 @@ class _UserLoginScreen extends State<UserLoginScreen> {
                     TextFormField(
                       decoration: InputDecoration(labelText: "请输入密码"),
                       obscureText: true,
-                      validator: (value) {
-
-                      },
+                      validator: (value) {},
                       onSaved: (value) {
                         password = value;
                       },
@@ -68,18 +66,26 @@ class _UserLoginScreen extends State<UserLoginScreen> {
             SizedBox(
               width: 340,
               height: 42,
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return UserRegisterScreen();
-                  }));
-                },
-                child: Text(
-                  '注册',
-                  style: TextStyle(fontSize: 8.0,color: Colors.green,textBaseline: TextBaseline.alphabetic ),
-                ),
-              ),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return UserRegisterScreen();
+                    }));
+                  },
+                  child: Center(
+                    child: Text(
+                      '注册',
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.lime,
+                          fontStyle: FontStyle.italic,
+                          textBaseline: TextBaseline.alphabetic,
+                          decoration:TextDecoration.underline,
+                          decorationStyle: TextDecorationStyle.dotted
+                      ),
+                    ),
+                  )),
             ),
           ],
         ));
