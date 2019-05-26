@@ -2,7 +2,7 @@ import 'package:lico_app/data_storage/kvstorager.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class kvSqliteHelper implements kvstorager {
+class kvSqliteHelper implements kvStorager {
   // 工厂模式
   factory kvSqliteHelper() => _getInstance();
 
