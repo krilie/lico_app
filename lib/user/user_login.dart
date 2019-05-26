@@ -78,7 +78,7 @@ class _UserLoginScreen extends State<UserLoginScreen> {
                       '注册',
                       style: TextStyle(
                           fontSize: 16.0,
-                          color: Colors.lime,
+                          color: Colors.deepOrange,
                           fontStyle: FontStyle.italic,
                           textBaseline: TextBaseline.alphabetic,
                           decoration:TextDecoration.underline,
