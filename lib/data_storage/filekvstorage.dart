@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:path_provider/path_provider.dart';
-
 import 'kvstorager.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 class fileSqliteHelper implements kvStorager {
   // 工厂模式
@@ -28,47 +25,44 @@ class fileSqliteHelper implements kvStorager {
 
   @override
   Future<String> getClientAccToken() {
-    // TODO: implement getClientAccToken
-    return null;
+    return getValue(Keys.clientAccToken);
   }
 
   @override
   Future<String> getServiceEndPoint() {
-    // TODO: implement getHostPort
-    return null;
+    return getValue(Keys.serviceEndPoint);
   }
 
   @override
   Future<String> getUserId() {
-    // TODO: implement getUserId
-    return null;
+    return getValue(Keys.userId);
   }
 
   @override
   Future<String> getUserNickName() {
-    // TODO: implement getUserNickName
-    return null;
+    return getValue(Keys.userNickName);
   }
 
   @override
   Future<String> getUserToken() {
-    // TODO: implement getUserToken
-    return null;
+    return getValue(Keys.userToken);
   }
 
   @override
   void setClientAccToken(String v) {
-    // TODO: implement setClientAccToken
+    setValue(Keys.clientAccToken, v);
   }
 
   @override
   void setServiceEndPoint(String hostPort) {
-    // TODO: implement setHostPort
+    setValue(Keys.serviceEndPoint, hostPort);
   }
 
   @override
   void setUserInfo(String nickName, userId, token) {
-    // TODO: implement setUserInfo
+    setValue(Keys.userNickName, nickName);
+    setValue(Keys.userId, userId);
+    setValue(Keys.userToken, token);
   }
 
   void setValue(String key, String value) async {
@@ -94,4 +88,24 @@ class fileSqliteHelper implements kvStorager {
     }
     // 关闭文件
   }
+
+  Future<String> getValue(String key) async {
+    // 打开文件
+    Directory documentsDir = await getApplicationDocumentsDirectory();
+    String documentsPath = documentsDir.path;
+    File file = File('$documentsPath/$basePath');
+    if (!file.existsSync()) {
+      file = await file.create(recursive: true);
+    }
+    // 写入文件
+    String notes = await file.readAsString();
+    if(notes == null || notes.length == 0){
+      return "";
+    }else{
+      var kvs = jsonDecode(notes);
+      return kvs[key];
+    }
+    // 关闭文件
+  }
+
 }
