@@ -1,12 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
 import 'kvstorager.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-// user.g.dart 将在我们运行生成命令后自动生成
-part 'filekvstorage.g.dart';
 
 class fileSqliteHelper implements kvStorager {
   // 工厂模式
@@ -83,22 +81,17 @@ class fileSqliteHelper implements kvStorager {
     }
     // 写入文件
     String notes = await file.readAsString();
-
+    if(notes == null || notes.length == 0){
+      var kvs = Map();
+      kvs[key] = value;
+      var jsonkv = jsonEncode(kvs);
+      file.writeAsString(jsonkv);
+    }else{
+      var kvs = jsonDecode(notes);
+      kvs[key] = value;
+      var jsonkv = jsonEncode(kvs);
+      file.writeAsString(jsonkv);
+    }
     // 关闭文件
   }
-}
-
-@JsonSerializable()
-class kvFile {
-
-  String userNickName = "user_nick_name";
-  String userId = "user_id";
-  String userToken = "user_token";
-  String clientAccToken = "client_acc_token";
-  String serviceEndPoint = "https://ligo.ml:83";
-
-  kvFile(this.clientAccToken,this.userId,this.userNickName,this.userToken,this.serviceEndPoint);
-
-  factory kvFile.fromJson(Map<String,dynamic> json) => _$kvFileFromJson(json);
-  Map<String,dynamic> toJson()=>_$kvFileToJson(this);
 }
