@@ -81,13 +81,15 @@ class kvSqliteHelper implements kvStorager {
   }
 
   @override
-  Future<String> getHostPort() {
+  Future<String> getServiceEndPoint() {
     // TODO: implement getHostPort
     return null;
   }
 
   @override
-  void setHostPort(String hostPort) {
-    // TODO: implement setHostPort
+  void setServiceEndPoint(String hostPort) async {
+    int id2 = await _database.rawInsert(
+        'INSERT INTO kv(key, value) VALUES(?, ?)',
+        [Keys.serviceEndPoint,hostPort]);
   }
 }

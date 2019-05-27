@@ -6,6 +6,7 @@ class Keys{
   static final userId = "user_id";
   static final userToken = "user_token";
   static final clientAccToken = "client_acc_token";
+  static final serviceEndPoint = "https://ligo.ml:83";
 }
 
 abstract class kvStorager{
@@ -15,8 +16,8 @@ abstract class kvStorager{
   void setClientAccToken(String v);
   Future<String> getUserToken();
   Future<String> getUserId();
-  Future<String> getHostPort();
-  void setHostPort(String hostPort);
+  Future<String> getServiceEndPoint();
+  void setServiceEndPoint(String endpoint);
   void close();
 }
 

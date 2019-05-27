@@ -56,13 +56,13 @@ class KvStorage implements kvStorager {
   }
 
   @override
-  Future<String> getHostPort() {
+  Future<String> getServiceEndPoint() {
     // TODO: implement getHostPort
     return null;
   }
 
   @override
-  void setHostPort(String hostPort) {
+  void setServiceEndPoint(String hostPort) {
     // TODO: implement setHostPort
   }
 

@@ -27,7 +27,7 @@ class api {
 
   api._internal() {
     var hostport="https://ligo.ml:83";
-    kvstorage.getHostPort().then((o){hostport = o;});
+    kvstorage.getServiceEndPoint().then((o){hostport = o;});
     options = new BaseOptions(
       baseUrl: hostport,
       connectTimeout: 5000,
