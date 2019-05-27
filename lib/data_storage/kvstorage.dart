@@ -2,9 +2,6 @@ import 'dart:core';
 import 'package:lico_app/data_storage/kvstorager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-
 class KvStorage implements kvStorager {
   // 工厂模式
   factory KvStorage() => _getInstance();
@@ -59,13 +56,13 @@ class KvStorage implements kvStorager {
   }
 
   @override
-  Future<String> getHostPort() {
+  Future<String> getServiceEndPoint() {
     // TODO: implement getHostPort
     return null;
   }
 
   @override
-  void setHostPort(String hostPort) {
+  void setServiceEndPoint(String hostPort) {
     // TODO: implement setHostPort
   }
 

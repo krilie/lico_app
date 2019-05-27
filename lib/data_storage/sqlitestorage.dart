@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:lico_app/data_storage/kvstorager.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -43,36 +44,34 @@ class kvSqliteHelper implements kvStorager {
 
   @override
   Future<String> getClientAccToken() {
-    // TODO: implement getClientAccToken
-    return null;
+    return getValue(Keys.clientAccToken);
   }
 
   @override
   Future<String> getUserId() {
-    // TODO: implement getUserId
-    return null;
+    return getValue(Keys.userId);
   }
 
   @override
   Future<String> getUserNickName() {
-    // TODO: implement getUserNickName
-    return null;
+    return getValue(Keys.userNickName);
   }
 
   @override
   Future<String> getUserToken() {
-    // TODO: implement getUserToken
-    return null;
+    return getValue(Keys.userToken);
   }
 
   @override
   void setClientAccToken(String v) {
-    // TODO: implement setClientAccToken
+    setValue(Keys.clientAccToken, v);
   }
 
   @override
   void setUserInfo(String nickName, userId, token) {
-    // TODO: implement setUserInfo
+    setValue(Keys.userNickName, nickName);
+    setValue(Keys.userId, userId);
+    setValue(Keys.userToken, token);
   }
 
   @override
@@ -81,13 +80,40 @@ class kvSqliteHelper implements kvStorager {
   }
 
   @override
-  Future<String> getHostPort() {
-    // TODO: implement getHostPort
-    return null;
+  Future<String> getServiceEndPoint() {
+    return getValue(Keys.serviceEndPoint);
   }
 
   @override
-  void setHostPort(String hostPort) {
-    // TODO: implement setHostPort
+  void setServiceEndPoint(String endPoint) async {
+    await setValue(Keys.serviceEndPoint,endPoint);
   }
+  // 设置值
+  void setValue(String key,String value) async {
+    await _database.transaction((tx) async {
+      var count = Sqflite.firstIntValue(await tx.rawQuery(
+          "SELECT COUNT(*) FROM kv where key = ?", [key]));
+      if (count == 0) {
+        int id2 = await tx.rawInsert('INSERT INTO kv(key, value) VALUES(?, ?)',
+            [key, value]);
+      } else if (count == 1) {
+        int id2 = await tx.rawUpdate('update kv set value=? where key = ?',
+            [value,key]);
+      } else {
+        int id2 = await tx.rawDelete(
+            'delete from kv where key = ?', [value, key]);
+        int id3 = await tx.rawInsert('INSERT INTO kv(key, value) VALUES(?, ?)',
+            [key, value]);
+      }
+    });
+  }
+  // 取值
+  Future<String> getValue(String key) async {
+    var value =await _database.rawQuery("select value from kv where key = ?",[key]);
+    if (value.length == 0)
+      return "";
+    else if(value.length > 0)
+      return value[0]["value"];
+  }
+
 }
