@@ -1,5 +1,6 @@
 
 import 'package:lico_app/data_storage/filekvstorage.dart';
+import 'package:lico_app/data_storage/static_kv_storage.dart';
 
 class Keys{
   static final userNickName = "user_nick_name";

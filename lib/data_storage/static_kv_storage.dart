@@ -54,4 +54,15 @@ class StaticKvStorage implements kvStorager{
     // TODO: implement setUserInfo
   }
 
+  @override
+  Future<String> getServiceEndPoint() {
+    // TODO: implement getServiceEndPoint
+    return null;
+  }
+
+  @override
+  void setServiceEndPoint(String endpoint) {
+    // TODO: implement setServiceEndPoint
+  }
+
 }
