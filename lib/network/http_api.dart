@@ -48,7 +48,6 @@ class api {
         var msg = StdRet.fromJson(e.response.data);
         debugPrint(msg.code + msg.message);
         showToast("${msg.code} :${msg.message}",duration: Duration(seconds: 7));
-        return e;
       },
       onResponse: (Response e) {},
     ));

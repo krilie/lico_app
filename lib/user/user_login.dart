@@ -47,13 +47,13 @@ class _UserLoginScreen extends State<UserLoginScreen> {
               width: 340,
               height: 42,
               child: RaisedButton(
-                onPressed: () {
+                onPressed: ()  {
                   // 登录
                   var registerForm = registerKey.currentState;
                   if (registerForm.validate()) {
                     registerForm.save();
-                    api.instance.userLogin(loginName, password).then((o) {
-                      debugPrint("login ok ${o.token}");
+                    api.instance.userLogin(loginName, password).then((o){
+                      debugPrint("login ok ${o}");
                     });
                   }
                 },
