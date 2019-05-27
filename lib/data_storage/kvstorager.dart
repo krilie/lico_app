@@ -1,5 +1,5 @@
 
-import 'package:lico_app/data_storage/sqlitestorage.dart';
+import 'package:lico_app/data_storage/filekvstorage.dart';
 
 class Keys{
   static final userNickName = "user_nick_name";
@@ -22,4 +22,4 @@ abstract class kvStorager{
 }
 
 // 使用这个
-kvStorager kvstorage  = kvSqliteHelper.instance;
+kvStorager kvstorage  = fileKvStorage.instance;

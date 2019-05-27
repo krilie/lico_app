@@ -3,18 +3,18 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'kvstorager.dart';
 
-class fileSqliteHelper implements kvStorager {
+class fileKvStorage implements kvStorager {
   // 工厂模式
-  factory fileSqliteHelper() => _getInstance();
+  factory fileKvStorage() => _getInstance();
 
-  static fileSqliteHelper get instance => _getInstance();
-  static fileSqliteHelper _instance = new fileSqliteHelper._internal();
+  static fileKvStorage get instance => _getInstance();
+  static fileKvStorage _instance = new fileKvStorage._internal();
 
-  static fileSqliteHelper _getInstance() {
+  static fileKvStorage _getInstance() {
     return _instance;
   }
 
-  fileSqliteHelper._internal() {}
+  fileKvStorage._internal() {}
 
   String basePath = "kvjson.json";
 
