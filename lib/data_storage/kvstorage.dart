@@ -2,9 +2,6 @@ import 'dart:core';
 import 'package:lico_app/data_storage/kvstorager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-
 class KvStorage implements kvStorager {
   // 工厂模式
   factory KvStorage() => _getInstance();
