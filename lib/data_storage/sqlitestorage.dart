@@ -87,9 +87,49 @@ class kvSqliteHelper implements kvStorager {
   }
 
   @override
-  void setServiceEndPoint(String hostPort) async {
-    int id2 = await _database.rawInsert(
-        'INSERT INTO kv(key, value) VALUES(?, ?)',
-        [Keys.serviceEndPoint,hostPort]);
+  void setServiceEndPoint(String endPoint) async {
+    await _database.transaction((tx) async {
+      var count = Sqflite.firstIntValue(await tx.rawQuery(
+          "SELECT COUNT(*) FROM kv where key = ?", [Keys.serviceEndPoint]));
+      if (count == 0) {
+        int id2 = await tx.rawInsert('INSERT INTO kv(key, value) VALUES(?, ?)',
+            [Keys.serviceEndPoint, endPoint]);
+      } else if (count == 1) {
+        int id2 = await tx.rawUpdate('update kv set value=? where key = ?',
+            [endPoint, Keys.serviceEndPoint]);
+      } else {
+        int id2 = await tx.rawDelete(
+            'delete from kv where key = ?', [endPoint, Keys.serviceEndPoint]);
+        int id3 = await tx.rawInsert('INSERT INTO kv(key, value) VALUES(?, ?)',
+            [Keys.serviceEndPoint, endPoint]);
+      }
+    });
   }
+
+  void setValue(String key,String value) async {
+    await _database.transaction((tx) async {
+      var count = Sqflite.firstIntValue(await tx.rawQuery(
+          "SELECT COUNT(*) FROM kv where key = ?", [key]));
+      if (count == 0) {
+        int id2 = await tx.rawInsert('INSERT INTO kv(key, value) VALUES(?, ?)',
+            [key, value]);
+      } else if (count == 1) {
+        int id2 = await tx.rawUpdate('update kv set value=? where key = ?',
+            [value,key]);
+      } else {
+        int id2 = await tx.rawDelete(
+            'delete from kv where key = ?', [value, key]);
+        int id3 = await tx.rawInsert('INSERT INTO kv(key, value) VALUES(?, ?)',
+            [key, value]);
+      }
+    });
+  }
+  Future<String> getValue(String key) async {
+    var value =await _database.rawQuery("select value from kv where key = ?",[key]);
+    if (value.length == 0)
+      return "";
+    else if(value.length > 0)
+      return value[0]["value"];
+  }
+
 }
